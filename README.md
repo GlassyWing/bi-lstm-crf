@@ -81,10 +81,10 @@ python tools/convert_to_h5.py 2014_processed 2014_processed.h5 -s src_dict.json 
 训练示例见：
 
 ```python
-examples/train_example.py
+train_example.py
 ```
 
-训练时，默认会生成模型配置文件`default-config.json`, 权重文件将会生成在`models`文件夹下。
+训练时，默认会生成模型配置文件`data/default-config.json`, 权重文件将会生成在`models`文件夹下。
 
 ### 使用字（词）向量
 
