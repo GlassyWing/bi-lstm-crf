@@ -1,7 +1,5 @@
 # bi-lstm-crf
 
-**注意**：更优秀的分词模型见[基于Universal Transformer的中文分词](https://github.com/GlassyWing/transformer-word-segmenter)
-
 ## 简介
 
 不同于英文自然语言处理，中文自然语言处理，例如语义分析、文本分类、词语蕴含等任务都需要预先进行分词。要将中文进行分割，直观的方式是通过为语句中的每一个字进行标记，以确定这个字是位于一个词的开头还是之中：
@@ -238,5 +236,5 @@ examples/train_example.py
 
 ## 附录
 
-1. 分词语料库： https://pan.baidu.com/s/1-LLzKOJglP5W0VCVsI0efg 密码: krhr
-2. 已训练模型权重、配置及字典: https://pan.baidu.com/s/1_IK-e8CDrgaCn-jZqozKJA 提取码: grng 
+1. 分词语料库： https://pan.baidu.com/s/1EtXdhPR0lGF8c7tT8epn6Q 密码: yj9j
+2. 已训练模型权重、配置及字典: https://pan.baidu.com/s/1_IK-e8CDrgaCn-jZqozKJA 提取码: grng
