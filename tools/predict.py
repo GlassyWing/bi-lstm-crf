@@ -1,6 +1,6 @@
 import argparse
 
-from dltokenizer import get_or_create
+from dl_segmenter import get_or_create
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="执行命令行分词")
