@@ -38,7 +38,7 @@
 "人民网/nz 1月1日/t 讯/ng 据/p 《/w [纽约/nsf 时报/n]/nz 》/w 报道/v ，/w 美国/nsf 华尔街/nsf 股市/n 在/p 2013年/t 的/ude1 最后/f 一天/mq 继续/v 上涨/vn ，/w 和/cc [全球/n 股市/n]/nz 一样/uyy ，/w 都/d 以/p [最高/a 纪录/n]/nz 或/c 接近/v [最高/a 纪录/n]/nz 结束/v 本/rz 年/qt 的/ude1 交易/vn 。/w "
 ```
 
-每一个词语使用空格分开后面使用POS标记词性，而本模型所需要的语料格式如下：
+原格式中每一个词语使用空格分开后面使用POS标记词性，而本模型所需要的语料格式如下：
 
 ```js
 嫌 疑 人 赵 国 军 。    B-N I-N I-N B-NR I-NR I-NR S-W
@@ -47,30 +47,48 @@
 使用命令:
 
 ```sh
-python dltokenizer/data_preprocess.py <语料目录> <输出目录> 
+python tools/data_preprocess.py people-2014/train 2014_processed -c True
 ```
 
-可将原始的有词性标注的文档转换为使BIS（B:表示语句块的开始，I:表示非语句块的开始，S:表示单独成词）标注的文件。
+可将原文件转换为用BIS标签（B:表示语句块的开始，I:表示非语句块的开始，S:表示单独成词）标注的文件。
 
-## 使用
+如上将会使用`people-2014/train`下的文件生成文本文件`2014_processed`
 
-### 生成字典
+## 生成字典
+
+使用命令：
 
 ```python
-examples/dict_test.py
+python tools/make_dicts.py 2014_processed -s src_dict.json -t tgt_dict.json
 ```
 
-默认将会使用`data/2014`文件夹下的文件（已转为BIS格式），生成两个字典文件，`data/src_dict.json`, `data/tgt_dict.json`
+这会使用文件`2014_processed`，生成两个字典文件，`src_dict.json`, `tgt_dict.json`
 
-### 训练
+使用方式见：`python tools/make_dicts.py -h`
+
+## 转换为hdf5格式
+
+使用命令：
 
 ```python
-examples/train_test.py
+python tools/convert_to_h5.py 2014_processed 2014_processed.h5 -s src_dict.json -t tgt_dict.json
 ```
 
-训练时，默认会生成模型配置文件`data/default-config.json`, 权重文件将会生成在`models`文件夹下。
+可将文本文件`2014_processed`转换为hdf5格式，提升训练速度，
 
-#### 使用字（词）向量
+使用方式见：`python tools/convert_to_h5.py -h`
+
+## 训练
+
+训练示例见：
+
+```python
+examples/train_example.py
+```
+
+训练时，默认会生成模型配置文件`default-config.json`, 权重文件将会生成在`models`文件夹下。
+
+### 使用字（词）向量
 
 在训练时可以使用已训练的字（词）向量作为每一个字的表征，字（词）向量的格式如下：
 
@@ -91,7 +109,7 @@ examples/train_test.py
 汉字字（词）向量来源
 可从[https://github.com/Embedding/Chinese-Word-Vectors](https://github.com/Embedding/Chinese-Word-Vectors)获得字（词）向量。字（词）向量文件中每一行格式为一个字（词）与其对应的300维向量。
 
-### 分词/解码
+## 分词/解码
 
 1. 编码方式：
 

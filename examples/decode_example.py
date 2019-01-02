@@ -1,12 +1,12 @@
 import time
 
-from tf_segmenter import get_or_create, TFSegmenter
+from dl_segmenter import get_or_create, DLSegmenter
 
 if __name__ == '__main__':
-    segmenter: TFSegmenter = get_or_create("../data/default-config.json",
+    segmenter: DLSegmenter = get_or_create("../data/default-config.json",
                                            src_dict_path="../data/src_dict.json",
                                            tgt_dict_path="../data/tgt_dict.json",
-                                           weights_path="../models/weights.127--0.02.h5")
+                                           weights_path="../models/weights.01-0.15.h5")
 
     texts = [
         "昨晚，英国首相特里萨•梅(TheresaMay)试图挽救其退欧协议的努力，在布鲁塞尔遭遇了严重麻烦。"

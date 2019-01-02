@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(name='dltokenizer',
 
-      version='0.1',
+      version='0.1-SNAPSHOT',
 
       url='https://github.com/GlassyWing/bi-lstm-crf',
 
@@ -14,7 +14,7 @@ setup(name='dltokenizer',
 
       description='inset pest predict model',
 
-      packages=find_packages(exclude=['tests', 'examples', 'tools']),
+      packages=find_packages(exclude=['tests', 'examples']),
 
       package_data={'dltokenizer': ['*.*', 'checkpoints/*', 'config/*']},
 

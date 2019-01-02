@@ -31,7 +31,7 @@ if __name__ == '__main__':
     # steps_per_epoch = 415030 // data_loader.batch_size
     # validation_steps = 20379 // data_loader.batch_size
 
-    steps_per_epoch = 500
+    steps_per_epoch = 2000
     validation_steps = 20
 
     config = {
@@ -65,9 +65,9 @@ if __name__ == '__main__':
                       write_grads=False)
 
     # Use LRFinder to find effective learning rate
-    lr_finder = LRFinder(1e-6, 1e-2, steps_per_epoch, epochs=1)  # => (2e-4, 3e-4)
-    lr_scheduler = WatchScheduler(lambda _, lr: lr / 2, min_lr=2e-4, max_lr=4e-4, watch="val_loss", watch_his_len=2)
-    lr_scheduler = SGDRScheduler(min_lr=4e-5, max_lr=1e-3, steps_per_epoch=steps_per_epoch,
+    lr_finder = LRFinder(1e-6, 1e-2, steps_per_epoch, epochs=1)  # => (1e-4, 1e-3)
+    # lr_scheduler = WatchScheduler(lambda _, lr: lr / 2, min_lr=2e-4, max_lr=4e-4, watch="val_loss", watch_his_len=2)
+    lr_scheduler = SGDRScheduler(min_lr=1e-4, max_lr=1e-3, steps_per_epoch=steps_per_epoch,
                                  cycle_length=15,
                                  lr_decay=0.9,
                                  mult_factor=1.2)
@@ -75,11 +75,11 @@ if __name__ == '__main__':
     X_train, Y_train, X_valid, Y_valid = data_loader.load_data(h5_dataset_path, frac=0.8)
 
     tokenizer.model.fit_generator(data_loader.generator_from_data(X_train, Y_train),
-                                  epochs=1,
+                                  epochs=epochs,
                                   steps_per_epoch=steps_per_epoch,
                                   validation_data=data_loader.generator_from_data(X_valid, Y_valid),
                                   validation_steps=validation_steps,
-                                  callbacks=[ck, log, lr_finder])
+                                  callbacks=[ck, log, lr_scheduler])
 
     lr_finder.plot_loss()
     plt.savefig("loss.png")
