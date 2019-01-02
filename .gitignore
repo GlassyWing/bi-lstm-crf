@@ -1,0 +1,6 @@
+.idea/
+data/
+models/
+tests/
+logs/
+*.egg-info/
