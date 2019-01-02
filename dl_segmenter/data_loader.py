@@ -64,7 +64,8 @@ class DataLoader:
                     yield sent, chunk
                     sent, chunk = [], []
 
-    def load_data(self, h5_file_path, frac=None):
+    @staticmethod
+    def load_data(h5_file_path, frac=None):
         with h5py.File(h5_file_path, 'r') as dfile:
             X, Y = dfile['X'][:], dfile['Y'][:]
 
