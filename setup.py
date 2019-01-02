@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-setup(name='dltokenizer',
+setup(name='dl_segmenter',
 
       version='0.1-SNAPSHOT',
 
@@ -16,7 +16,7 @@ setup(name='dltokenizer',
 
       packages=find_packages(exclude=['tests', 'examples']),
 
-      package_data={'dltokenizer': ['*.*', 'checkpoints/*', 'config/*']},
+      package_data={'dl_segmenter': ['*.*', 'checkpoints/*', 'config/*']},
 
       long_description=open('README.md', encoding="utf-8").read(),
 
