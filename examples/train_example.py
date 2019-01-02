@@ -71,7 +71,7 @@ if __name__ == '__main__':
                                  lr_decay=0.9,
                                  mult_factor=1.2)
 
-    X_train, Y_train, X_valid, Y_valid = data_loader.load_data(h5_dataset_path, frac=0.8)
+    X_train, Y_train, X_valid, Y_valid = DataLoader.load_data(h5_dataset_path, frac=0.8)
 
     tokenizer.model.fit_generator(data_loader.generator_from_data(X_train, Y_train),
                                   epochs=1,
