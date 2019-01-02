@@ -5,6 +5,7 @@ from dl_segmenter import get_or_create, save_config
 from dl_segmenter.custom.callbacks import LRFinder, SGDRScheduler, WatchScheduler
 from dl_segmenter.data_loader import DataLoader
 import matplotlib.pyplot as plt
+import os
 
 if __name__ == '__main__':
     h5_dataset_path = "data/2014_processed.h5"  # 转换为hdf5格式的数据集
@@ -19,7 +20,7 @@ if __name__ == '__main__':
     batch_size = 32
     epochs = 32
 
-    import os
+
 
     # GPU 下用于选择训练的GPU
     os.environ["CUDA_VISIBLE_DEVICES"] = "3"
@@ -42,6 +43,8 @@ if __name__ == '__main__':
         "max_num_words": 20000,
         "dropout_rate": 0.1
     }
+
+    os.makedirs(os.path.dirname(weights_save_path), exist_ok=True)
 
     tokenizer = get_or_create(config,
                               optimizer=Adam(),
