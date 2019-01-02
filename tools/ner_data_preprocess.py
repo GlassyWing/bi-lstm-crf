@@ -2,9 +2,6 @@ import os
 import re
 import argparse
 
-MAX_LEN_SIZE = 150
-
-
 def print_process(process):
     num_processed = int(30 * process)
     num_unprocessed = 30 - num_processed
@@ -127,7 +124,6 @@ def _tag(words):
 
 
 if __name__ == '__main__':
-    global MAX_LEN_SIZE
     parser = argparse.ArgumentParser(description="将使用词性标注的文件转换为用BIS分块标记的文件。")
     parser.add_argument("corups_dir", type=str, help="指定存放语料库的文件夹，程序将会递归查找目录下的文件。")
     parser.add_argument("output_path", type=str, default='.', help="指定标记好的文件的输出路径。")
