@@ -58,6 +58,7 @@ def _tag(line):
                 pre_word = None
         pos_t = None
         bis.append((word, pos))
+
     return bis
 
 
@@ -66,6 +67,7 @@ def remove_pos(source_dir, target_path):
         for name in files:
             file = os.path.join(root, name)
             bises = process_file(file)
+
             with open(target_path, encoding="utf-8", mode="a") as f:
                 for bis in bises:
                     sent, tags = [], []
@@ -93,7 +95,7 @@ def restore(source_dir, target_path):
 
 if __name__ == '__main__':
     parse = argparse.ArgumentParser(description="根据指定的语料生成黄金标准文件与其相应的无分词标记的原始文件")
-    parse.add_argument("--corups_dir", help="语料文件夹", default="../data/2014/test/0101")
+    parse.add_argument("--corups_dir", help="语料文件夹", default="../data/2014/")
     parse.add_argument("--gold_file_path", help="生成的黄金标准文件路径", default="../data/gold.utf8")
     parse.add_argument("--restore_file_path", help="生成无标记的原始文件路径", default="../data/restore.utf8")
 

@@ -13,7 +13,7 @@ if __name__ == '__main__':
     tokenizer = get_or_create("../data/default-config.json",
                               src_dict_path="../data/src_dict.json",
                               tgt_dict_path="../data/tgt_dict.json",
-                              weights_path="../models/weights.20-0.04.sgdr.h5")
+                              weights_path="../models/weights.32--0.18.h5")
 
     text = args.text
     file = args.file
