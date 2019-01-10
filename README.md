@@ -45,7 +45,7 @@
 使用命令:
 
 ```sh
-python tools/data_preprocess.py people-2014/train 2014_processed -c True
+python tools/data_preprocess.py people-2014/train 2014_processed -c True -s True
 ```
 
 可将原文件转换为用BIS标签（B:表示语句块的开始，I:表示非语句块的开始，S:表示单独成词）标注的文件。
