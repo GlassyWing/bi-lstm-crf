@@ -157,6 +157,7 @@ class SGDRScheduler(Callback):
                   Ex. To reduce the max_lr by 20% after each cycle, set this value to 0.8.
         cycle_length: Initial number of epochs in a cycle.
         mult_factor: Scale epochs_to_restart after each full cycle completion.
+        initial_epoch: Used to resume training, **note**: Other args must be same as last training.
     # References
         Blog post: jeremyjordan.me/nn-learning-rate
         Original paper: http://arxiv.org/abs/1608.03983
@@ -168,7 +169,8 @@ class SGDRScheduler(Callback):
                  steps_per_epoch,
                  lr_decay=1,
                  cycle_length=10,
-                 mult_factor=2):
+                 mult_factor=2,
+                 initial_epoch=0):
 
         self.min_lr = min_lr
         self.max_lr = max_lr
@@ -181,6 +183,12 @@ class SGDRScheduler(Callback):
 
         self.cycle_length = cycle_length
         self.mult_factor = mult_factor
+
+        if initial_epoch > 0:
+            times = initial_epoch // self.cycle_length
+            for _ in range(times):
+                self.max_lr *= self.lr_decay
+            self.batch_since_restart = (self.cycle_length - times) * self.steps_per_epoch
 
         self.history = {}
 
@@ -220,10 +228,20 @@ class SGDRScheduler(Callback):
 
 
 class LRSchedulerPerStep(Callback):
-    def __init__(self, d_model, warmup=4000):
+    def __init__(self, d_model, warmup=4000, initial_epoch=0, steps_per_epoch=None):
+        """
+        learning rate decay strategy in "Attention is all you need" https://arxiv.org/abs/1706.03762
+        :param d_model: model dimension
+        :param warmup: warm up steps
+        :param initial_epoch: Used to resume training,
+                **note**: Other args must be same as last training.
+        """
         self.basic = d_model ** -0.5
         self.warm = warmup ** -1.5
         self.step_num = 0
+        if initial_epoch > 0:
+            assert steps_per_epoch is not None
+            self.step_num = initial_epoch * steps_per_epoch
 
     def on_batch_begin(self, batch, logs=None):
         self.step_num += 1
