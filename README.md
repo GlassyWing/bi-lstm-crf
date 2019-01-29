@@ -1,5 +1,7 @@
 # bi-lstm-crf
 
+基于Universal Transformer的分词模型见:[https://github.com/GlassyWing/transformer-word-segmenter](https://github.com/GlassyWing/transformer-word-segmenter):
+
 ## 简介
 
 不同于英文自然语言处理，中文自然语言处理，例如语义分析、文本分类、词语蕴含等任务都需要预先进行分词。要将中文进行分割，直观的方式是通过为语句中的每一个字进行标记，以确定这个字是位于一个词的开头还是之中：
