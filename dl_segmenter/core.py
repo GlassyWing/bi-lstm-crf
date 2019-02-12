@@ -144,7 +144,6 @@ class DLSegmenter:
             "sparse_target": self.sparse_target,
             "bi_lstm_units": self.bi_lstm_units,
             "dropout_rate": self.dropout_rate,
-            'attention_dropout': self.attention_dropout,
         }
 
     __singleton = None
