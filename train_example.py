@@ -18,7 +18,7 @@ if __name__ == '__main__':
     src_dict_path = "config/src_dict.json"  # 源字典路径
     tgt_dict_path = "config/tgt_dict.json"  # 目标字典路径
     batch_size = 16
-    epochs = 64
+    epochs = 128
     num_gpu = 1
     max_seq_len = 150
     initial_epoch = 0
@@ -40,10 +40,8 @@ if __name__ == '__main__':
         "vocab_size": data_loader.src_vocab_size,
         "chunk_size": data_loader.tgt_vocab_size,
         "sparse_target": data_loader.sparse_target,
-        "max_seq_len": data_loader.max_len,
         "embed_dim": 300,
         "bi_lstm_units": 256,
-        'attention_dropout': 0.1
     }
 
     os.makedirs(os.path.dirname(weights_save_path), exist_ok=True)
