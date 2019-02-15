@@ -1,3 +1,5 @@
+import math
+
 import keras.backend as K
 import numpy as np
 from keras.callbacks import Callback, ModelCheckpoint
@@ -184,11 +186,16 @@ class SGDRScheduler(Callback):
         self.cycle_length = cycle_length
         self.mult_factor = mult_factor
 
-        if initial_epoch > 0:
-            times = initial_epoch // self.cycle_length
-            for _ in range(times):
-                self.max_lr *= self.lr_decay
-            self.batch_since_restart = (self.cycle_length - times) * self.steps_per_epoch
+        # Return to the last state when it was stopped.
+        if initial_epoch < self.cycle_length:
+            num_cycles = 0
+        else:
+            num_cycles = initial_epoch / self.cycle_length
+            num_cycles = math.ceil(math.log(num_cycles, self.mult_factor))
+
+        for _ in range(num_cycles):
+            self.max_lr *= lr_decay
+            self.cycle_length = np.ceil(self.cycle_length * self.mult_factor)
 
         self.history = {}
 
