@@ -186,18 +186,33 @@ class SGDRScheduler(Callback):
         self.cycle_length = cycle_length
         self.mult_factor = mult_factor
 
+        self.history = {}
+
+        self.recovery_status(initial_epoch)
+
+    def recovery_status(self, initial_epoch):
         # Return to the last state when it was stopped.
         if initial_epoch < self.cycle_length:
             num_cycles = 0
         else:
-            num_cycles = initial_epoch / self.cycle_length
-            num_cycles = math.ceil(math.log(num_cycles, self.mult_factor))
+            ratio = initial_epoch / self.cycle_length
 
+            num_cycles = 0
+            while ratio > 0:
+                ratio -= self.mult_factor ** num_cycles
+                num_cycles += 1
+
+            # If haven't done
+            if ratio < 0:
+                num_cycles -= 1
+
+        done_epochs = 0
         for _ in range(num_cycles):
-            self.max_lr *= lr_decay
+            self.max_lr *= self.lr_decay
+            done_epochs += self.cycle_length
             self.cycle_length = np.ceil(self.cycle_length * self.mult_factor)
 
-        self.history = {}
+        self.batch_since_restart = (initial_epoch - done_epochs) * self.steps_per_epoch
 
     def clr(self):
         '''Calculate the learning rate.'''
