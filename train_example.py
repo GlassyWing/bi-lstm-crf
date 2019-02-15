@@ -17,7 +17,7 @@ if __name__ == '__main__':
 
     src_dict_path = "config/src_dict.json"  # 源字典路径
     tgt_dict_path = "config/tgt_dict.json"  # 目标字典路径
-    batch_size = 16
+    batch_size = 32
     epochs = 128
     num_gpu = 1
     max_seq_len = 150
@@ -70,8 +70,10 @@ if __name__ == '__main__':
 
     # Use LRFinder to find effective learning rate
     lr_finder = LRFinder(1e-6, 1e-2, steps_per_epoch, epochs=1)  # => (1e-4, 1e-3)
-    lr_scheduler = SGDRScheduler(min_lr=1e-4, max_lr=1e-3, steps_per_epoch=steps_per_epoch,
-                                 cycle_length=15,
+    lr_scheduler = SGDRScheduler(min_lr=1e-4, max_lr=1e-3,
+                                 initial_epoch=initial_epoch,
+                                 steps_per_epoch=steps_per_epoch,
+                                 cycle_length=10,
                                  lr_decay=0.9,
                                  mult_factor=1.2)
 
